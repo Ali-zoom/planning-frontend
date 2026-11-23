@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { ProjectCard } from "./ProjectCard";
 import { QueryClient, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 
 interface Props {
   search: string;
@@ -69,11 +70,13 @@ const ProjectsData = ({ search, setSearch }: Props) => {
           <p className="text-destructive">لاتوجد بيانات تطابق البحث</p>
         ) : (
           projects.map((project) => (
+            <Link key={project.proID} href={`project-details/${project.proID}`}>
             <ProjectCard
               key={project.proID}
               name={project.proname}
               price={40000000}
             />
+            </Link>
           ))
         )}
       </div>
