@@ -1,15 +1,13 @@
 "use client";
 
 import { api } from "@/lib/api";
+import { project_tab } from "@/lib/types";
 import { useQuery, UseQueryResult } from "@tanstack/react-query";
 
-export type ProjectType = {
-  proID: number;
-  proname: string;
-};
+
 
 export type ProjectsResponse = {
-  projects: ProjectType[];
+  projects: project_tab[];
   totalProjects: number;
   totalPages: number;
   currentPage: number;
@@ -34,7 +32,7 @@ const useGetProjectsPagination = (
   search?: string,
 ): UseQueryResult<ProjectsResponse> => {
   return useQuery({
-    queryKey: ["projects", { page, limit, search }],
+    queryKey: ["project-list", { page, limit, search }],
     queryFn: () => fetchProjects(page, limit, search),
     staleTime: 1000 * 60 * 60,
     gcTime: 1000 * 60 * 60 * 2,

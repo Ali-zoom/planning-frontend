@@ -41,7 +41,7 @@ const ProjectsData = ({ search, setSearch }: Props) => {
     const nextPage = currentPage + 1;
 
     queryClient.query({
-      queryKey: ["projects", { limit: limit, page: nextPage, search: search }],
+      queryKey: ["project-list", { limit: limit, page: nextPage, search: search }],
       queryFn: () => fetchProjects(nextPage, limit, search),
     });
   }, [search, currentPage, queryClient]);
@@ -70,11 +70,14 @@ const ProjectsData = ({ search, setSearch }: Props) => {
           <p className="text-destructive">لاتوجد بيانات تطابق البحث</p>
         ) : (
           projects.map((project) => (
-            <Link key={project.proID} href={`project-details/${project.proID}`}>
+            <Link key={project.proID} href={{
+    pathname: `/project-details/${project.proID}`,
+    
+  }}>
             <ProjectCard
               key={project.proID}
-              name={project.proname}
-              price={40000000}
+              name={project.proname ?? ""}
+  price={Number(project.currentKulfa) || 0}
             />
             </Link>
           ))
